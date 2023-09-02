@@ -48,10 +48,10 @@ class Graph:
         self.curves = list()
         for i in range(len(self.exg_channels)):
             p = self.win.addPlot(row=i, col=0)
-            p.showAxis('left', False)
-            p.setMenuEnabled('left', False)
-            p.showAxis('bottom', False)
-            p.setMenuEnabled('bottom', False)
+            p.showAxis('left', True)
+            p.setMenuEnabled('left', True)
+            p.showAxis('bottom', True)
+            p.setMenuEnabled('bottom', True)
             if i == 0:
                 p.setTitle('TimeSeries Plot')
             self.plots.append(p)
@@ -61,8 +61,8 @@ class Graph:
 
     def _init_psd(self):
         self.psd_plot = self.win.addPlot(row=0, col=1, rowspan=len(self.exg_channels) // 2)
-        self.psd_plot.showAxis('left', False)
-        self.psd_plot.setMenuEnabled('left', False)
+        self.psd_plot.showAxis('left', True)
+        self.psd_plot.setMenuEnabled('left', True)
         self.psd_plot.setTitle('PSD Plot')
         self.psd_plot.setLogMode(False, True)
         self.psd_curves = list()
@@ -74,10 +74,10 @@ class Graph:
 
     def _init_band_plot(self):
         self.band_plot = self.win.addPlot(row=len(self.exg_channels) // 2, col=1, rowspan=len(self.exg_channels) // 2)
-        self.band_plot.showAxis('left', False)
-        self.band_plot.setMenuEnabled('left', False)
-        self.band_plot.showAxis('bottom', False)
-        self.band_plot.setMenuEnabled('bottom', False)
+        self.band_plot.showAxis('left', True)
+        self.band_plot.setMenuEnabled('left', True)
+        self.band_plot.showAxis('bottom', True)
+        self.band_plot.setMenuEnabled('bottom', True)
         self.band_plot.setTitle('BandPower Plot')
         y = [0, 0, 0, 0, 0]
         x = [1, 2, 3, 4, 5]
@@ -140,20 +140,26 @@ def main():
     parser.add_argument('--master-board', type=int, help='master board id for streaming and playback boards',
                         required=False, default=BoardIds.NO_BOARD)
     args = parser.parse_args()
+    #
+    # params = BrainFlowInputParams()
+    # params.ip_port = args.ip_port
+    # params.serial_port = args.serial_port
+    # params.mac_address = args.mac_address
+    # params.other_info = args.other_info
+    # params.serial_number = args.serial_number
+    # params.ip_address = args.ip_address
+    # params.ip_protocol = args.ip_protocol
+    # params.timeout = args.timeout
+    # params.file = args.file
+    # params.master_board = args.master_board
+    #
+    # board_shim = BoardShim(args.board_id, params)
+    #----------------------------------------------------
 
     params = BrainFlowInputParams()
-    params.ip_port = args.ip_port
-    params.serial_port = args.serial_port
-    params.mac_address = args.mac_address
-    params.other_info = args.other_info
-    params.serial_number = args.serial_number
-    params.ip_address = args.ip_address
-    params.ip_protocol = args.ip_protocol
-    params.timeout = args.timeout
-    params.file = args.file
-    params.master_board = args.master_board
+    board_id = BoardIds.GANGLION_NATIVE_BOARD.value
+    board_shim = BoardShim(board_id, params)
 
-    board_shim = BoardShim(args.board_id, params)
     try:
         board_shim.prepare_session()
         board_shim.start_stream(450000, args.streamer_params)

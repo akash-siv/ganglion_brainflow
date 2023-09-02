@@ -14,7 +14,7 @@ def main():
     BoardShim.enable_dev_board_logger()
     # use synthetic board for demo
     params = BrainFlowInputParams()
-    board = BoardShim(BoardIds.SYNTHETIC_BOARD.value, params)
+    board = BoardShim(BoardIds.GANGLION_NATIVE_BOARD.value, params)
     board.prepare_session()
     board.start_stream()
     time.sleep(10)
