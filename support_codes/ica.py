@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from pprint import pprint
 
 import matplotlib
 matplotlib.use('Agg')
@@ -10,20 +11,26 @@ from brainflow.data_filter import DataFilter
 
 
 def main():
-    board_id = BoardIds.SYNTHETIC_BOARD
+    board_id = BoardIds.GANGLION_NATIVE_BOARD
     eeg_channels = BoardShim.get_eeg_channels(board_id)
+    pprint(BoardShim.get_board_descr(board_id))
 
     params = BrainFlowInputParams()
     board = BoardShim(board_id, params)
-    board.prepare_session()
-    board.start_stream()
-    time.sleep(10)
-    data = board.get_board_data(500)
-    board.stop_stream()
-    board.release_session()
+    # board.prepare_session()
+    # board.start_stream()
+    # time.sleep(10)
+    data = DataFilter.read_file('C:\\Users\\akash\\PycharmProjects\\Brainflow-bci\\think_data\\test_60_1694967344.csv')
+    # data = board.get_board_data(500)
+    print(len(data))
+    print(data)
+    # board.stop_stream()
+    # board.release_session()
+    print(eeg_channels)
 
-    channel_to_use = eeg_channels[4]
-    data = data[channel_to_use, :]
+    channel_to_use = eeg_channels[3]
+    data = data[channel_to_use, :500]
+    print(len(data))
     # provide 5 chunks of data for components selection
     data = data.reshape(5, 100)
     data = np.ascontiguousarray(data)

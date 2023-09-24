@@ -16,15 +16,15 @@ def main():
 
     # use synthetic board for demo
     params = BrainFlowInputParams()
-    board_id = BoardIds.SYNTHETIC_BOARD.value
+    board_id = BoardIds.GANGLION_NATIVE_BOARD.value
     board = BoardShim(board_id, params)
-    board.prepare_session()
-    board.start_stream()
+    # board.prepare_session()
+    # board.start_stream()
     BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
-    time.sleep(10)
-    data = board.get_board_data()
-    board.stop_stream()
-    board.release_session()
+    # time.sleep(10)
+    data = DataFilter.read_file('C:\\Users\\akash\\PycharmProjects\\Brainflow-bci\\think_data\\test_60_1694967344.csv')
+    # board.stop_stream()
+    # board.release_session()
 
     # demo how to convert it to pandas DF and plot data
     eeg_channels = BoardShim.get_eeg_channels(board_id)

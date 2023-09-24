@@ -19,13 +19,13 @@ def main():
     #board_id = BoardIds.MUSE_2_BOARD
     board_id = BoardIds.GANGLION_NATIVE_BOARD.value
     board = BoardShim(board_id, params)
-    board.prepare_session()
-    board.start_stream()
-    BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
-    time.sleep(5)
-    data = board.get_board_data()
-    board.stop_stream()
-    board.release_session()
+    # board.prepare_session()
+    # board.start_stream()
+    # BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
+    # time.sleep(5)
+    data = DataFilter.read_file('C:\\Users\\akash\\PycharmProjects\\Brainflow-bci\\think_data\\test_60_1694967344.csv')
+    # board.stop_stream()
+    # board.release_session()
 
     eeg_channels = BoardShim.get_eeg_channels(board_id)
     df = pd.DataFrame(np.transpose(data))

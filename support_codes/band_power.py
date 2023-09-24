@@ -9,18 +9,18 @@ def main():
 
     # use synthetic board for demo
     params = BrainFlowInputParams()
-    board_id = BoardIds.SYNTHETIC_BOARD.value
+    board_id = BoardIds.GANGLION_NATIVE_BOARD.value
     board_descr = BoardShim.get_board_descr(board_id)
     sampling_rate = int(board_descr['sampling_rate'])
     board = BoardShim(board_id, params)
-    board.prepare_session()
-    board.start_stream()
-    BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
-    time.sleep(10)
+    # board.prepare_session()
+    # board.start_stream()
+    # BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
+    # time.sleep(10)
     nfft = DataFilter.get_nearest_power_of_two(sampling_rate)
-    data = board.get_board_data()
-    board.stop_stream()
-    board.release_session()
+    data = DataFilter.read_file('C:\\Users\\akash\\PycharmProjects\\Brainflow-bci\\think_data\\test_60_1694967344.csv')
+    # board.stop_stream()
+    # board.release_session()
 
     eeg_channels = board_descr['eeg_channels']
     # second eeg channel of synthetic board is a sine wave at 10Hz, should see huge alpha

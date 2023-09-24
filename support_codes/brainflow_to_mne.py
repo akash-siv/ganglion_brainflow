@@ -23,13 +23,17 @@ def main():
     board.release_session()
 
     eeg_channels = BoardShim.get_eeg_channels(BoardIds.GANGLION_NATIVE_BOARD.value)
+    print(eeg_channels)
     eeg_data = data[eeg_channels, :]
     eeg_data = eeg_data / 1000000  # BrainFlow returns uV, convert to V for MNE
 
     # Creating MNE objects from brainflow data arrays
     ch_types = ['eeg'] * len(eeg_channels)
-    ch_names = BoardShim.get_eeg_names(BoardIds.SYNTHETIC_BOARD.value)
-    sfreq = BoardShim.get_sampling_rate(BoardIds.SYNTHETIC_BOARD.value)
+    # ch_names = BoardShim.get_eeg_names(BoardIds.SYNTHETIC_BOARD.value)
+    ch_names = ['Fz', 'C3', 'Cz', 'C4']
+    print(ch_names)
+    sfreq = BoardShim.get_sampling_rate(BoardIds.GANGLION_NATIVE_BOARD.value)
+
     info = mne.create_info(ch_names=ch_names, sfreq=sfreq, ch_types=ch_types)
     raw = mne.io.RawArray(eeg_data, info)
     # its time to plot something!

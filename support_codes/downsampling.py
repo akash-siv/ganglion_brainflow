@@ -9,16 +9,16 @@ def main():
 
     # use synthetic board for demo
     params = BrainFlowInputParams()
-    board = BoardShim(BoardIds.SYNTHETIC_BOARD.value, params)
-    board.prepare_session()
-    board.start_stream()
-    BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
-    time.sleep(10)
-    data = board.get_board_data(20)
-    board.stop_stream()
-    board.release_session()
+    board = BoardShim(BoardIds.GANGLION_NATIVE_BOARD.value, params)
+    # board.prepare_session()
+    # board.start_stream()
+    # BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
+    # time.sleep(10)
+    data = DataFilter.read_file('C:\\Users\\akash\\PycharmProjects\\Brainflow-bci\\think_data\\test_60_1694967344.csv')
+    # board.stop_stream()
+    # board.release_session()
 
-    eeg_channels = BoardShim.get_eeg_channels(BoardIds.SYNTHETIC_BOARD.value)
+    eeg_channels = BoardShim.get_eeg_channels(BoardIds.GANGLION_NATIVE_BOARD.value)
     # demo for downsampling, it just aggregates data
     for count, channel in enumerate(eeg_channels):
         print('Original data for channel %d:' % channel)

@@ -1,4 +1,5 @@
 import time
+from pprint import pprint
 
 import matplotlib
 import numpy as np
@@ -11,23 +12,25 @@ from brainflow.board_shim import BoardShim, BrainFlowInputParams, LogLevels, Boa
 from brainflow.data_filter import DataFilter, AggOperations, WaveletTypes, NoiseEstimationLevelTypes, \
     WaveletExtensionTypes, ThresholdTypes, WaveletDenoisingTypes
 
-
+folder_name = 'think_data'
 def main():
     BoardShim.enable_dev_board_logger()
 
 
 
-    # use synthetic board for demo
-    params = BrainFlowInputParams()
+    # read data from csv
+    # params = BrainFlowInputParams()
     board_id = BoardIds.GANGLION_NATIVE_BOARD.value
-    board = BoardShim(board_id, params)
-    board.prepare_session()
-    board.start_stream()
-    BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
-    time.sleep(10)
-    data = board.get_current_board_data(500)
-    board.stop_stream()
-    board.release_session()
+    pprint(BoardShim.get_board_descr(board_id))
+    # board = BoardShim(board_id, params)
+    # board.prepare_session()
+    # board.start_stream()
+    # BoardShim.log_message(LogLevels.LEVEL_INFO.value, 'start sleeping in the main thread')
+    # time.sleep(10)
+    # data = board.get_current_board_data(500)
+    data = DataFilter.read_file('C:\\Users\\akash\\PycharmProjects\\Brainflow-bci\\think_data\\test_60_1694967344.csv')
+    # board.stop_stream()
+    # board.release_session()
 
     # Board details
     exg_channel = BoardShim.get_exg_channels(board_id)

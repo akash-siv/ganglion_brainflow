@@ -12,7 +12,7 @@ def main():
     BoardShim.enable_dev_board_logger()
 
     params = BrainFlowInputParams()
-    board = BoardShim(BoardIds.SYNTHETIC_BOARD.value, params)
+    board = BoardShim(BoardIds.GANGLION_NATIVE_BOARD.value, params)
 
     for i in range(2):
         board.prepare_session()
